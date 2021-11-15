@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package me.martijn.hotel;
+
+import "room.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+
+service Hotel {
+  rpc FindAvailableRooms(FindAvailableRoomsRequest) returns (FindAvailableRoomsResponse);
+  rpc FindAvailableRoomsAsync(FindAvailableRoomsRequest) returns (stream FindAvailableRoomsResponse);
+
+  rpc Book(BookRequest) returns (google.protobuf.Empty);
+}
+
+message FindAvailableRoomsRequest {
+  string location = 1;
+  google.protobuf.Timestamp checkin = 2;
+  google.protobuf.Timestamp checkout = 3;
+  uint32 persons = 4;
+}
+
+message FindAvailableRoomsResponse {
+  repeated Room rooms = 1;
+}
+
+message BookRequest {
+  string identifier = 1;
+  string room_identifier = 2;
+  google.protobuf.Timestamp checkin = 3;
+  google.protobuf.Timestamp checkout = 4;
+  uint32 persons = 5;
+}

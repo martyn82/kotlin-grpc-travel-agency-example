@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package me.martijn.car_rental;
+
+import "car.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+
+service CarRental {
+  rpc FindAvailableCars(FindAvailableCarsRequest) returns (FindAvailableCarsResponse);
+
+  rpc Rent(RentRequest) returns (google.protobuf.Empty);
+}
+
+message FindAvailableCarsRequest {
+  google.protobuf.Timestamp pickup = 1;
+  google.protobuf.Timestamp return = 2;
+}
+
+message FindAvailableCarsResponse {
+  repeated Car cars = 1;
+}
+
+message RentRequest {
+  string identifier = 1;
+  string car_identifier = 2;
+}

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package me.martijn.trip;
+
+option java_multiple_files = true;
+
+message PackagedTrip {
+  string identifier = 1;
+  string name = 2;
+  string location = 3;
+  string room_identifier = 4;
+  string car_identifier = 5;
+}

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package me.martijn.trip;
+
+import "packaged_trip.proto";
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+
+service Trip {
+  rpc FindTrips(FindTripsRequest) returns (FindTripsResponse);
+
+  rpc Book(BookRequest) returns (google.protobuf.Empty);
+}
+
+message FindTripsRequest {
+  string location = 1;
+}
+
+message FindTripsResponse {
+  repeated PackagedTrip trips = 1;
+}
+
+message BookRequest {
+  string identifier = 1;
+  string packaged_trip_identifier = 2;
+}

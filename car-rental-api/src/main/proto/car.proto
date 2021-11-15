@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package me.martijn.car_rental;
+
+option java_multiple_files = true;
+
+message Car {
+  string identifier = 1;
+  string make = 2;
+  string model = 3;
+  string type = 4;
+}

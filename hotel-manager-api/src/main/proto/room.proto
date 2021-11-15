@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package me.martijn.hotel;
+
+option java_multiple_files = true;
+
+message Room {
+  string identifier = 1;
+  string location = 2;
+  uint32 persons = 3;
+}
