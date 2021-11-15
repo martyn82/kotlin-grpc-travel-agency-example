@@ -61,10 +61,15 @@ class HotelServer(private val port: Int) {
                 )
                 .build()
 
-        override fun findAvailableRoomsAsync(request: FindAvailableRoomsRequest): Flow<FindAvailableRoomsResponse> =
-            rooms.values.asFlow().filter { it.persons >= request.persons } .map {
+        override suspend fun subscribe(request: SubscribeRequest): SubscribeResponse =
+            SubscribeResponse.newBuilder()
+                .setSubscriptionId("abcdef")
+                .build()
+
+        override fun listen(request: ListenRequest): Flow<ListenResponse> =
+            rooms.values.asFlow().map {
                 Thread.sleep(3000)
-                FindAvailableRoomsResponse.newBuilder()
+                ListenResponse.newBuilder()
                     .addRooms(it)
                     .build()
             }

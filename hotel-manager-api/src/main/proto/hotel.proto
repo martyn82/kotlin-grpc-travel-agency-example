@@ -10,7 +10,9 @@ option java_multiple_files = true;
 
 service Hotel {
   rpc FindAvailableRooms(FindAvailableRoomsRequest) returns (FindAvailableRoomsResponse);
-  rpc FindAvailableRoomsAsync(FindAvailableRoomsRequest) returns (stream FindAvailableRoomsResponse);
+
+  rpc Subscribe(SubscribeRequest) returns (SubscribeResponse);
+  rpc Listen(ListenRequest) returns (stream ListenResponse);
 
   rpc Book(BookRequest) returns (google.protobuf.Empty);
 }
@@ -23,6 +25,20 @@ message FindAvailableRoomsRequest {
 }
 
 message FindAvailableRoomsResponse {
+  repeated Room rooms = 1;
+}
+
+message SubscribeRequest {}
+
+message SubscribeResponse {
+  string subscription_id = 1;
+}
+
+message ListenRequest {
+  string subscription_id = 1;
+}
+
+message ListenResponse {
   repeated Room rooms = 1;
 }
 

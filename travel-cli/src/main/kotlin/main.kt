@@ -42,7 +42,8 @@ suspend fun main() {
     val cars = CarRentalClient(carChannel)
     val trips = TripClient(tripChannel)
 
-    println("Hotels:\n  Use 'findRoom x' to find rooms for at least x persons.\n  Use 'bookRoom x' to book a room with identifier x.")
+    print("Hotels:\n  Use 'findRoom x' to find rooms for at least x persons.\n  Use 'bookRoom x' to book a room with identifier x.")
+    println("\n  Use 'subscribe' to subscribe to rooms coming available.")
     println("Cars:\n  Use 'findCars' to find available cars.\n  Use 'rentCar x' to rent a car with identifier x.")
     println("Trips:\n  Use 'findTrips' to find package deals.\n  Use 'bookTrip x' to book a package deal with identifier x.")
 
@@ -56,13 +57,14 @@ suspend fun main() {
                     println("Found room:\n$room")
                 }
 
-            "findRoomStream" -> {
-                suspend fun kick() {
-                    hotel.findAvailableRoomsAsync(words[1].toInt()).mapLeft {
-                        kick()
+            "subscribe" -> {
+                suspend fun notify(subscription: String) {
+                    hotel.listen(subscription).mapLeft {
+                        notify(subscription)
                     }
                 }
-                kick()
+                val subscription = hotel.subscribe().subscriptionId
+                notify(subscription)
             }
 
             "bookRoom" ->
